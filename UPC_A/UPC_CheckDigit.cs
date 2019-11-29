@@ -26,26 +26,25 @@ namespace UPC_A {
         /// <exception cref="System.FormatException">Thrown when invalid format of UPC-A code</exception>
         /// See <see cref="Regex.IsMatch(String, String)"/> to add regular expressions.
         /// <param name="upc_a_code">A String containing a UPC-A code.</param>
-        public static String Calculate_ckeck_digit(String upc_a_code) {
+        public static String Calculate_check_digit(String upc_a_code) {
             if (upc_a_code == null) {
-                throw new ArgumentNullException("UPC-A CODE IS NULL\n");
+                throw new ArgumentNullException("UPC-A code is Null\n");
             }
 
             int n = upc_a_code.Length;
 
             if (n != 11) {
-                throw new ArgumentOutOfRangeException("INVALID LENGTH OF UPC-A CODE\n");
+                throw new ArgumentOutOfRangeException($"Invalid length {n} instead of 11\n");
             }
 
             if (!Regex.IsMatch(upc_a_code, @"^\d+$")) {
-                throw new FormatException("INVALID FORMAT OF UPC-A CODE\n");
+                throw new FormatException("Invalid format of UPC-A code\n");
             }
 
             int od_sum = 0, ev_sum = 0, check_digit = 0;
 
-            //as first index of array is 0, but index 1 should be insted in acordance with technical task,
-            //od_sum and ev_sum have been switched to emulate work starting from index 1 which is not even number
-            //while zero it is
+            //as first index of array is 0, but index 1 should be used insted of 0 in acordance with technical task,
+            //od_sum and ev_sum have been switched to emulate work starting from index 1, which is not even number
             for (int i = 0; i < n; i++) {
                 if (i % 2 == 0) {
                     od_sum += (int)Char.GetNumericValue(upc_a_code[i]);
